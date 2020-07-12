@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="p-3">
+    <h1 class="mb-3">Courses</h1>
+    
+    <div class="card-deck" style="max-height: 100px;">
+        {% for course in courses_list %}
+            <div class="card border-info" style="width: 18rem;">
+                {% if course.image %}
+                    <img class="card-img-top" src="{{ course.image.url }}" alt="{{ course.name }}">
+                {% else %}
+                    <img class="card-img-top" src="{% static 'images/courses.png' %}" alt="{{ course.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.name }}</h5>
+                    {{ course.description | linebreaks }}
+                    <a href="{{ course.get_absolute_url }}" class="btn btn-primary">Ver</a>
+                </div>
+            </div>
+        {% empty %}
+            <p>Nenhum curso disponível</p>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock content %}

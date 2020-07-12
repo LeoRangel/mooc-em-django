@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="course-header"
+    {% if course.image %}
+        style="background-image: url({{ course.image.url }})"
+    {% else %}
+        style="background-image: url({% static 'images/courses.png' %})"
+    {% endif %}>
+    <div class="filtro-bg">
+        <div>
+            <h1>{{ course.name}}</h1>
+            {{ course.description | linebreaks }}
+            <hr>
+            <p>
+                <a href="#" class="btn btn-lg btn-secondary">Começar</a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="p-3 mt-5 d-flex justify-content-center align-items-center">
+    <div style="max-width: 800px;">
+        <h2 class="mb-3">Sobre o curso</h2>
+        <hr>
+        {{ course.about | linebreaks }}
+        
+
+        <h2 class="mt-5 mb-3">Enviar mensagem/dúvida</h2>
+        <hr>
+        {% if is_valid %}
+            <p>Você enviou a mensagem com sucesso!</p>
+        {% endif %}
+        <form method="post" action="#contato" id="contato">
+            {% csrf_token %}
+        
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    <br>
+                    {{ field }}
+                    <br>
+                    {{ errors }}
+                </div>
+            {% endfor %}
+        
+            <div class="form-group">
+                <input type="submit" value="Enviar" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
